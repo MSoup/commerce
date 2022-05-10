@@ -1,0 +1,28 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>{{ listing.title }}</h2>
+
+    <img src="/{{ listing.image }}" alt="{{ listing.title }}"/>
+    <p>Current Bid:    
+        {% if listing.max_bid > 0 %}
+            {{ listing.max_bid }}
+        {% else %}
+            <span class="text-primary">None</span>
+        {% endif %}
+    </p>
+        <p>Time Left: Not Implemented Yet</p>
+        <form action="{% url 'auctions:bid' listing.id %}" method="post">
+            {% csrf_token %}
+            <label for="bid_amt">Your bid: </label>
+            {% if user.is_authenticated %}
+            <input id="bid_amt" type="text" name="bid" value="{{ bid_amt }}">
+            {% else %}
+            <p class="text-danger">Please log in to bid</p>
+            <input disabled id="bid_amt" type="text" name="bid" value="">
+            {% endif %}
+            <input type="submit" value="Place Bid">
+        </form>
+        <a class="justify-content-center" href="{% url 'auctions:index' %}">Go Back</a>
+
+{% endblock %}

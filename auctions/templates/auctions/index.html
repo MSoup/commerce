@@ -1,0 +1,26 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Active Listings</h2>
+    <div class="container">
+        <div class="row">
+            {% for listing in listings %}
+            <div class="col">
+                <img src="{{ listing.image }}" alt="{{ listing.title }}">
+                <p><strong>{{ listing.title }}</strong></p>
+                    <p>Current Bid:    
+                        {% if listing.max_bid > 0 %}
+                            {{ listing.max_bid }}
+                        {% else %}
+                            <span class="text-primary">None</span>
+                        {% endif %}
+                    </p>
+                        <p>Time Left: Not Implemented Yet</p>
+                        <a class="justify-content-center" href="{% url 'auctions:listing' listing.id %}">Details</a>
+                    </div>
+                    {% empty %}
+                    <h3>No Active Listings</h3>
+                {% endfor %}
+        </div>
+    </div>
+{% endblock %}
